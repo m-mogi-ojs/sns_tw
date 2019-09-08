@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  client:
+    build: client
+    ports:
+      - "8080:8080"
+    links:
+      - server
+    volumes:
+      - "./client:/app"
+
+
+  server:
+    build: server
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "db"
+    environment:
+      - "DATABASE_HOST=db"
+      - "DATABASE_PORT=5432"
+      - "DATABASE_USER=postgres"
+      - "DATABASE_PASSWORD=mysecretpassword1234"
+    links:
+      - db
+    volumes:
+      - "./server:/app"
+
+  db:
+    image: postgres:11.3
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_USER=postgres"
