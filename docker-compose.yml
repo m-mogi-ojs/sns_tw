@@ -9,8 +9,6 @@ services:
       - server
     volumes:
       - "./client:/app"
-
-
   server:
     build: server
     ports:
@@ -26,10 +24,29 @@ services:
       - db
     volumes:
       - "./server:/app"
-
   db:
     image: postgres:11.3
     ports:
       - "5432:5432"
     environment:
       - "POSTGRES_USER=postgres"
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8081:8080"
+    volumes:
+      - "./swagger/openapi.json:/openapi.json"
+    environment:
+      SWAGGER_JSON: /openapi.json
+  swagger-editor:
+    image: swaggerapi/swagger-editor
+    ports:
+      - "8082:8080"
+  swagger-api:
+    image: danielgtaylor/apisprout
+    ports:
+      - "8083:8000"
+    volumes:
+      - "./swagger/openapi.json:/openapi.json"
+    command: /openapi.json
+    
