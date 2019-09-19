@@ -1,7 +1,7 @@
 <template>
   <div class="signin container">
     <h1 class="label">ログイン</h1>
-    <b-field horizontal grouped label="ユーザー名" label-position="inside">
+    <b-field horizontal label="ユーザー名" label-position="inside">
       <b-input type="text" placeholder="Username" v-model="username"></b-input>
     </b-field>
     <b-field horizontal label="パスワード">
@@ -27,8 +27,7 @@ export default {
     signIn: function () {
       firebase.auth().signInWithEmailAndPassword(this.username, this.password)
         .then(user => {
-          alert('ログインしました。')
-          this.$router.push('/')
+          this.$router.push('/home')
         })
         .catch(error => {
           alert(error.message)
