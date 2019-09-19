@@ -7,12 +7,14 @@
     <b-field horizontal label="パスワード">
       <b-input type="password" placeholder="Password" v-model="password"></b-input>
     </b-field>
-    <button class="button is-info">ログインする</button>
+    <button @click="signIn" class="button is-info">ログインする</button>
     <p>会員登録がまだお済みでない方は<router-link to="/signup">こちらから会員登録</router-link></p>
   </div>
 </template>
 
 <script>
+import firebase from 'firebase'
+
 export default {
   name: 'signin',
   data () {
@@ -21,7 +23,18 @@ export default {
       password: ''
     }
   },
-  methods: {}
+  methods: {
+    signIn: function () {
+      firebase.auth().signInWithEmailAndPassword(this.username, this.password)
+        .then(user => {
+          alert('ログインしました。')
+          this.$router.push('/')
+        })
+        .catch(error => {
+          alert(error.message)
+        })
+    }
+  }
 }
 </script>
 
