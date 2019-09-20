@@ -24,10 +24,15 @@ export default {
     HelloWorld
   },
   methods: {
-    signOut: function () {
-      firebase.auth().signOut().then(() => {
-        this.$router.push('/')
+    signOut: async function () {
+      let router = this.$router
+      let isSuccessPush = false
+      await firebase.auth().signOut().then(async function() {
+        isSuccessPush = true
       })
+      if (isSuccessPush) {
+        router.push({ name: 'about' })
+      }
     }
   }
 }

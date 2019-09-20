@@ -11,7 +11,7 @@ let router = new Router({
   routes: [
     {
       path: '*',
-      redirect: 'signin'
+      redirect: { name: 'about' }
     },
     {
       path: '/home',
@@ -30,27 +30,41 @@ let router = new Router({
     {
       path: '/signup',
       name: 'signup',
-      component: () => import('./views/Signup.vue')
+      component: () => import('./views/Signup.vue'),
+      meta: { notRequiresAuth: true }
     },
     {
       path: '/signin',
       name: 'signin',
-      component: () => import('./views/Signin.vue')
+      component: () => import('./views/Signin.vue'),
+      meta: { notRequiresAuth: true }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  if (requiresAuth) {
+  const notRequiresAuth = to.matched.some(record => record.meta.notRequiresAuth)
+
+  if (requiresAuth || notRequiresAuth) {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        next()
+        if (requiresAuth) {
+          next()
+        } else if (notRequiresAuth) {
+          next({
+            path: '/home'
+          })
+        }
       } else {
-        next({
-          path: '/signin',
-          query: { redirect: to.fullPath }
-        })
+        if (requiresAuth) {
+          next({
+            path: '/signin',
+            query: { redirect: to.fullPath }
+          })
+        } else if (notRequiresAuth) {
+          next()
+        }
       }
     })
   } else {
