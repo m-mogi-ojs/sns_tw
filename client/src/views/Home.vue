@@ -1,9 +1,8 @@
 <template>
   <div class="home">
-    <div>{{ name }}さん</div>
-    <img alt="Vue logo" src="../assets/logo.png">
+    <AuthedHeader></AuthedHeader>
+    <img alt="Vue logo" src="../assets/logo.svg" style="width: 50%;">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <button @click="signOut">ログアウト</button>
   </div>
 </template>
 
@@ -11,15 +10,11 @@
 import firebase from 'firebase'
 
 // @ is an alias to /src
+import AuthedHeader from '@/components/AuthedHeader.vue'
 import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'home',
-  data() {
-    return {
-      name: firebase.auth().currentUser.email
-    }
-  },
   components: {
     HelloWorld
   },

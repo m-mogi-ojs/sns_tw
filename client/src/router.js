@@ -38,6 +38,11 @@ let router = new Router({
       name: 'signin',
       component: () => import('./views/Signin.vue'),
       meta: { notRequiresAuth: true }
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: () => import('./views/Search.vue')
     }
   ]
 })

@@ -8,6 +8,7 @@ import firebase from 'firebase'
 
 Vue.config.productionTip = false
 Vue.use(Buefy)
+Vue.component('AuthedHeader', () => import('./components/AuthedHeader.vue'))
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBy66U0S5WIIiIv30hLG9azqiL1W_xGlg0',
