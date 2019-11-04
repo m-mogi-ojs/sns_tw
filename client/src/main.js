@@ -4,11 +4,10 @@ import router from './router'
 import store from './store'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 
 Vue.config.productionTip = false
 Vue.use(Buefy)
-Vue.component('AuthedHeader', () => import('./components/AuthedHeader.vue'))
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBy66U0S5WIIiIv30hLG9azqiL1W_xGlg0',

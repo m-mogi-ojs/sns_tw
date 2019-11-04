@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <g-header/>
     <router-view/>
     <Footer></Footer>
   </div>
@@ -7,9 +8,12 @@
 
 <script>
 import Footer from '@/components/Footer.vue'
+import Header from '@/components/Header.vue'
+import firebase from 'firebase/app'
 
 export default {
   components: {
+    gHeader: Header,
     Footer
   }
 }
