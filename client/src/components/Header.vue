@@ -1,35 +1,21 @@
 <template>
-  <b-navbar v-if="isSigned()" class="Header" type="is-light">
+  <b-navbar class="Header" type="is-light">
     <template slot="brand">
       <b-navbar-item tag="router-link" :to="{ path: '/' }">
         <img src="../assets/logo.svg" width="32" height="32">
       </b-navbar-item>
     </template>
     <template slot="start">
-    <b-navbar-item href="/">about</b-navbar-item>
-    <b-navbar-item href="/home" active>home</b-navbar-item>
-    <b-navbar-item href="/search">search</b-navbar-item>
+      <router-link tag="a" to="/"       exact-active-class="is-active" exact class="navbar-item">about</router-link>
+      <router-link tag="a" to="/home"   exact-active-class="is-active" class="navbar-item">home</router-link>
+      <router-link tag="a" to="/search" exact-active-class="is-active" class="navbar-item">search</router-link>
     </template>
-    <template slot="end">
+    <template v-if="isSigned()" slot="end">
       <b-navbar-item tag="div">
         {{getAccountName()}}さん
       </b-navbar-item>
       <b-navbar-item tag="div">
         <a @click="signOut" class="button is-light">ログアウト</a>
-      </b-navbar-item>
-    </template>
-  </b-navbar>
-  <b-navbar v-else>
-    <template slot="brand">
-      <b-navbar-item href="/">
-        <ul>
-          <li><router-link to="/">top</router-link></li>
-          <li><router-link to="/home">home</router-link></li>
-          <li><router-link to="/signin">signin</router-link></li>
-          <li><router-link to="/signup">signup</router-link></li>
-          <li><router-link to="/search">search</router-link></li>
-          <!--<li>{{getAccountName()}}</li>-->
-        </ul>
       </b-navbar-item>
     </template>
   </b-navbar>
@@ -42,7 +28,8 @@ export default {
   name: 'Header',
   data () {
     return {
-      user: {}
+      user: {},
+      selectTab: null
     }
   },
   methods: {
